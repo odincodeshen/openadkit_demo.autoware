@@ -1,6 +1,6 @@
 services:
   simulator:
-    image: ghcr.io/autowarefoundation/demo-packages:simulator
+    image: odinlmshen/autoware-simulator:v1.0
     container_name: simulator
     volumes:
       - ./etc/simulation:/autoware/scenario-sim
@@ -20,7 +20,7 @@ services:
       launch_rviz:=false
 
   planning-control:
-    image: ghcr.io/autowarefoundation/demo-packages:planning-control
+    image: odinlmshen/autoware-planning-control:v1.0
     container_name: planning-control
     depends_on:
       - simulator 
@@ -41,7 +41,7 @@ services:
       perception/enable_traffic_light:=false
 
   visualizer:
-    image: ghcr.io/autowarefoundation/demo-packages:visualizer
+    image: odinlmshen/autoware-visualizer:v1.0
     container_name: visualizer
     volumes:
       - ./etc/simulation:/autoware/scenario-sim
