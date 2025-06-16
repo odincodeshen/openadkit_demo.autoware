@@ -2,11 +2,14 @@ services:
   simulator:
     image: odinlmshen/autoware-simulator:v1.0
     container_name: simulator
+    network_mode: host
     volumes:
       - ./etc/simulation:/autoware/scenario-sim
+      - .:/root/workspace
     environment:
       - ROS_DOMAIN_ID=88
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=/root/workspace/cycloneDDS.xml
     command: >
       ros2 launch scenario_test_runner scenario_test_runner.launch.py
       record:=false
@@ -22,15 +25,17 @@ services:
   planning-control:
     image: odinlmshen/autoware-planning-control:v1.0
     container_name: planning-control
-    depends_on:
-      - simulator 
+    network_mode: host
+    deploy:
     volumes:
       - ./etc/simulation:/autoware/scenario-sim
       - $CONF_FILE:/opt/autoware/share/autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml
       - $COMMON_FILE:/opt/autoware/share/autoware_launch/config/planning/scenario_planning/common/common.param.yaml
+      - .:/root/workspace
     environment:
       - ROS_DOMAIN_ID=88
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=/root/workspace/cycloneDDS.xml
     command: >
       ros2 launch autoware_launch planning_simulator.launch.xml
       map_path:=/autoware/scenario-sim/map
@@ -42,9 +47,11 @@ services:
 
   visualizer:
     image: odinlmshen/autoware-visualizer:v1.0
+    network_mode: host
     container_name: visualizer
     volumes:
       - ./etc/simulation:/autoware/scenario-sim
+      - .:/root/workspace
     ports:
       - 6080:6080
       - 5999:5999
@@ -54,5 +61,6 @@ services:
       - RVIZ_CONFIG=/autoware/scenario-sim/rviz/scenario_simulator.rviz
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
       - NGROK_URL=${NGROK_URL}
+      - CYCLONEDDS_URI=/root/workspace/cycloneDDS.xml
     command: >-
       sleep infinity
