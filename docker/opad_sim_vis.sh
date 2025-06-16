@@ -14,12 +14,12 @@ export COMMON_FILE=$SCRIPT_DIR/etc/simulation/config/common.param.yaml
 export NGROK_AUTHTOKEN=$NGROK_AUTHTOKEN
 export NGROK_URL=$NGROK_URL
 # Start visualizer and show logs
-docker compose -f "$SCRIPT_DIR/docker-compose.yml" up visualizer -d
+docker compose -f "$SCRIPT_DIR/docker-compose-2ins.yml" up visualizer -d
 echo "Waiting 10 seconds for visualizer to start..."
 sleep 10
-docker compose -f "$SCRIPT_DIR/docker-compose.yml" logs visualizer
+docker compose -f "$SCRIPT_DIR/docker-compose-2ins.yml" logs visualizer
 # Start simulator
 echo "Running simulator v1.."
-TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose.yml" up simulator --abort-on-container-exit
-TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose.yml" up simulator --abort-on-container-exit
-TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose.yml" up simulator --abort-on-container-exit
+TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose-2ins.yml" up simulator --abort-on-container-exit
+TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose-2ins.yml" up simulator --abort-on-container-exit
+TIMEOUT=300 CONF_FILE=$CONF_FILE_FAIL docker compose -f "$SCRIPT_DIR/docker-compose-2ins.yml" up simulator --abort-on-container-exit
