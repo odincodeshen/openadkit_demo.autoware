@@ -1,0 +1,27 @@
+<CycloneDDS>
+	<Domain>
+		<General>
+			<AllowMulticast>false</AllowMulticast>
+			<Interfaces>
+				<NetworkInterface
+					autodetermine="false"
+					name="ens5"
+					priority="default"
+					multicast="false"
+				/>
+			</Interfaces>
+		</General>
+		<Discovery>
+			<MaxAutoParticipantIndex>1000</MaxAutoParticipantIndex>
+			<ParticipantIndex>auto</ParticipantIndex>
+			<Peers>
+                     	<Peer address="172.31.25.163"/>
+        	            <Peer address="172.31.19.5"/>
+			</Peers>
+		</Discovery>
+		<Tracing>
+			<OutputFile>/root/workspace/cyclonelog.log</OutputFile>
+			<Verbosity>config</Verbosity>
+		</Tracing>
+	</Domain>
+</CycloneDDS>
